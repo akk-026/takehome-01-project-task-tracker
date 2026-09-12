@@ -1,0 +1,13 @@
+:root { color: #1c2541; font-family: Inter, system-ui, sans-serif; background: #f4f6fb; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+.card { width: min(420px, calc(100% - 32px)); padding: 36px; background: white; border: 1px solid #e2e7f1; border-radius: 16px; box-shadow: 0 16px 40px #17203314; }
+.brand { color: #635bff; font-weight: 800; letter-spacing: -.5px; }
+h1 { letter-spacing: -1px; margin: 22px 0 8px; }
+p, small { color: #68738a; line-height: 1.55; }
+label { display: block; margin: 16px 0 7px; color: #44506a; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; }
+input { width: 100%; border: 1px solid #d9dfeb; border-radius: 8px; padding: 11px; font: inherit; }
+button { width: 100%; margin-top: 20px; border: 0; border-radius: 8px; padding: 11px; background: #635bff; color: white; font: inherit; font-weight: 800; cursor: pointer; }
+.demo, .error { margin-top: 18px; padding: 12px; border-radius: 8px; font-size: 12px; line-height: 1.6; }
+.demo { background: #f0efff; color: #4a447f; }.error { background: #fff0f0; color: #ad3434; }
+.role { display: inline-block; background: #e8f7ef; color: #27734d; border-radius: 16px; padding: 5px 9px; font-size: 12px; font-weight: 800; }
