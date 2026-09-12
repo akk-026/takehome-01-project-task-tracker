@@ -2,19 +2,23 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { sendError } = require('./lib/http');
 const { handleAuthRoute } = require('./routes/auth');
+const { handleProjectRoute } = require('./routes/projects');
 const { createAuth } = require('./services/auth');
 const { createStore } = require('./services/store');
 
 const mimeTypes = { '.css': 'text/css', '.html': 'text/html', '.js': 'text/javascript' };
 
 function createApp({ dataFile, publicDirectory } = {}) {
-  const auth = createAuth(createStore(dataFile));
+  const store = createStore(dataFile);
+  const auth = createAuth(store);
+  const projects = require('./services/projects').createProjectService(store);
   const publicDir = publicDirectory || path.join(__dirname, '..', 'public');
   return async (request, response) => {
     try {
       const url = new URL(request.url, `http://${request.headers.host}`);
       if (url.pathname.startsWith('/api/')) {
-        if (!await handleAuthRoute(request, response, url.pathname, auth)) sendError(response, 404, 'API route not found.');
+        const handled = await handleAuthRoute(request, response, url.pathname, auth) || await handleProjectRoute(request, response, url, auth, projects);
+        if (!handled) sendError(response, 404, 'API route not found.');
         return;
       }
       const relative = url.pathname === '/' ? 'index.html' : url.pathname.slice(1);

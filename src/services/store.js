@@ -26,6 +26,7 @@ function createStore(filePath) {
   }
   return {
     read() { ensure(); return JSON.parse(fs.readFileSync(file, 'utf8')); },
+    write(data) { fs.writeFileSync(file, JSON.stringify(data, null, 2)); },
     passwordHash,
     file
   };

@@ -19,6 +19,7 @@ function createAuth(store) {
       const user = store.read().users.find(candidate => candidate.id === sessions.get(token));
       return user ? publicUser(user) : null;
     },
+    users() { return store.read().users.map(publicUser); },
     signOut(request) { sessions.delete((request.headers.authorization || '').replace(/^Bearer\s+/i, '')); }
   };
 }

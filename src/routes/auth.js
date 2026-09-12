@@ -19,6 +19,11 @@ async function handleAuthRoute(request, response, pathname, auth) {
     if (user) { auth.signOut(request); sendJson(response, 200, { ok: true }); }
     return true;
   }
+  if (pathname === '/api/users' && request.method === 'GET') {
+    const user = requireUser(request, response, auth);
+    if (user && requireManager(response, user)) sendJson(response, 200, { users: auth.users() });
+    return true;
+  }
   // Temporary proof that project mutations will be protected server-side in the next commit.
   if (pathname === '/api/admin/manager-check' && request.method === 'POST') {
     const user = requireUser(request, response, auth);
